@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact | Auto Detailing | 858-568-2763</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: #0d0d0d;
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    /* NAV */
+    #nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(13,13,13,0.96);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav-link {
+      position: relative;
+      color: rgba(255,255,255,0.55);
+      transition: color 0.2s;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 1.5px;
+      background: #e63030;
+      transition: width 0.25s ease;
+    }
+    .nav-link:hover { color: #fff; }
+    .nav-link:hover::after { width: 100%; }
+    .nav-link.active { color: #fff; }
+    .nav-link.active::after { width: 100%; }
+
+    /* CTA */
+    .cta-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #e63030;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 9999px;
+      padding: 0.85rem 2.2rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(230,48,48,0.35);
+    }
+    .cta-pill::after {
+      content: '';
+      position: absolute;
+      top: -50%; left: -60%;
+      width: 40%; height: 200%;
+      background: rgba(255,255,255,0.18);
+      transform: skewX(-20deg);
+      transition: left 0.4s ease;
+    }
+    .cta-pill:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(230,48,48,0.55); }
+    .cta-pill:hover::after { left: 120%; }
+
+    .cta-sms {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(230,48,48,0.4);
+      color: #e63030;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 9999px;
+      padding: 0.85rem 2.2rem;
+      transition: border-color 0.2s, background 0.2s, color 0.2s;
+    }
+    .cta-sms:hover {
+      border-color: #e63030;
+      background: rgba(230,48,48,0.1);
+    }
+
+    .cta-outline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(230,48,48,0.4);
+      color: #e63030;
+      font-weight: 600;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 9999px;
+      padding: 0.85rem 2rem;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .cta-outline:hover {
+      border-color: #e63030;
+      background: #e63030;
+      color: #fff;
+    }
+
+    /* Glass cards */
+    .glass-card {
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+    }
+    .glass-card:hover {
+      border-color: rgba(230,48,48,0.2);
+      box-shadow: 0 4px 30px rgba(230,48,48,0.06);
+      transform: translateY(-3px);
+    }
+
+    /* Overline */
+    .overline {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #e63030;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Phone number glow */
+    .phone-glow {
+      color: #fff;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: 0.04em;
+      text-shadow: 0 0 60px rgba(230,48,48,0.4);
+      transition: text-shadow 0.3s, color 0.3s;
+    }
+    .phone-glow:hover {
+      color: #e63030;
+      text-shadow: 0 0 80px rgba(230,48,48,0.7);
+    }
+
+    /* Pulse ring */
+    .pulse-ring {
+      animation: pulse-ring 2.2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+    }
+    @keyframes pulse-ring {
+      0%   { box-shadow: 0 0 0 0 rgba(230,48,48,0.5); }
+      70%  { box-shadow: 0 0 0 18px rgba(230,48,48,0); }
+      100% { box-shadow: 0 0 0 0 rgba(230,48,48,0); }
+    }
+
+    /* Section heading bar */
+    .section-heading { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2rem; }
+    .bar { width: 3px; height: 1.5rem; background: #e63030; border-radius: 2px; flex-shrink: 0; }
+
+    /* Fade up */
+    .fade-up {
+      opacity: 1;
+      transform: translateY(28px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up.delay-1 { transition-delay: 0.1s; }
+    .fade-up.delay-2 { transition-delay: 0.2s; }
+    .fade-up.delay-3 { transition-delay: 0.3s; }
+    .fade-up.delay-4 { transition-delay: 0.4s; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header id="nav">
+    <div class="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-1.5">
+        <span style="color:#e63030;font-weight:900;font-size:1.15rem;letter-spacing:0.12em;text-transform:uppercase;font-family:'Poppins',sans-serif;">Detail</span>
+        <span style="color:#fff;font-weight:900;font-size:1.15rem;letter-spacing:0.12em;text-transform:uppercase;font-family:'Poppins',sans-serif;">Menu</span>
+      </a>
+      <nav class="flex items-center gap-8">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="contact.html" class="nav-link active">Contact</a>
+        <a href="tel:8585682763" class="cta-pill hidden sm:inline-flex" style="padding:0.6rem 1.4rem;font-size:0.75rem;">Call Now</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- PAGE HEADER -->
+  <section style="position:relative;padding:6rem 1.5rem 4rem;text-align:center;overflow:hidden;">
+    <div style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(230,48,48,0.1) 0%,transparent 70%);"></div>
+    <div style="position:relative;max-width:600px;margin:0 auto;" class="fade-up">
+      <span class="overline">Get In Touch</span>
+      <h1 style="font-weight:900;font-size:clamp(2.5rem,6vw,4.5rem);letter-spacing:-0.02em;line-height:1.05;margin-bottom:1.25rem;">
+        Contact <span style="color:#e63030;">Us</span>
+      </h1>
+      <p style="color:rgba(255,255,255,0.45);font-size:0.95rem;line-height:1.75;max-width:420px;margin:0 auto;">
+        Ready to book? Call or text us. We'll get your vehicle looking showroom new.
+      </p>
+    </div>
+  </section>
+
+  <!-- MAIN -->
+  <main class="max-w-4xl mx-auto px-6 pb-32">
+
+    <!-- Big Phone CTA -->
+    <div style="text-align:center;margin-bottom:5rem;" class="fade-up">
+
+      <!-- Pulse icon -->
+      <div style="display:inline-flex;align-items:center;justify-content:center;width:5rem;height:5rem;background:#e63030;border-radius:50%;margin-bottom:2.5rem;" class="pulse-ring">
+        <span style="font-size:2.2rem;">📞</span>
+      </div>
+
+      <p style="font-size:0.72rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:1rem;">Call or Text</p>
+
+      <a href="tel:8585682763" class="phone-glow" style="display:block;font-size:clamp(2.8rem,9vw,5.5rem);margin-bottom:2.5rem;text-decoration:none;">
+        858-568-2763
+      </a>
+
+      <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;" class="sm:flex-row sm:justify-center">
+        <a href="tel:8585682763" class="cta-pill" style="width:100%;max-width:240px;">
+          📞 &nbsp;Call Now
+        </a>
+        <a href="sms:8585682763" class="cta-sms" style="width:100%;max-width:240px;">
+          💬 &nbsp;Text Us
+        </a>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div style="border-top:1px solid rgba(255,255,255,0.06);margin-bottom:4rem;"></div>
+
+    <!-- Info Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-16">
+
+      <div class="glass-card p-7 fade-up delay-1">
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.25rem;">
+          <div style="width:2.5rem;height:2.5rem;background:rgba(230,48,48,0.12);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;">📱</div>
+          <h3 style="font-weight:700;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin:0;">Phone</h3>
+        </div>
+        <a href="tel:8585682763" style="display:block;color:#e63030;font-weight:900;font-size:1.5rem;letter-spacing:0.06em;text-decoration:none;margin-bottom:0.4rem;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#e63030'">858-568-2763</a>
+        <p style="color:rgba(255,255,255,0.35);font-size:0.85rem;margin:0;">Call or text anytime</p>
+      </div>
+
+      <div class="glass-card p-7 fade-up delay-2">
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.25rem;">
+          <div style="width:2.5rem;height:2.5rem;background:rgba(230,48,48,0.12);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;">📍</div>
+          <h3 style="font-weight:700;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin:0;">Service Area</h3>
+        </div>
+        <p style="color:#fff;font-weight:700;font-size:1.1rem;margin:0 0 0.4rem;">San Diego, CA</p>
+        <p style="color:rgba(255,255,255,0.35);font-size:0.85rem;margin:0;">Mobile detailing — we come to you</p>
+      </div>
+
+      <div class="glass-card p-7 fade-up delay-1">
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.25rem;">
+          <div style="width:2.5rem;height:2.5rem;background:rgba(230,48,48,0.12);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;">🕐</div>
+          <h3 style="font-weight:700;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin:0;">Availability</h3>
+        </div>
+        <p style="color:#fff;font-weight:700;font-size:1.1rem;margin:0 0 0.4rem;">By Appointment</p>
+        <p style="color:rgba(255,255,255,0.35);font-size:0.85rem;margin:0;">Call or text to schedule</p>
+      </div>
+
+      <div class="glass-card p-7 fade-up delay-2">
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.25rem;">
+          <div style="width:2.5rem;height:2.5rem;background:rgba(230,48,48,0.12);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;">🚗</div>
+          <h3 style="font-weight:700;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin:0;">Vehicle Types</h3>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
+          <span style="background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.7);font-size:0.78rem;font-weight:600;border-radius:9999px;padding:0.3rem 0.85rem;">Cars</span>
+          <span style="background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.7);font-size:0.78rem;font-weight:600;border-radius:9999px;padding:0.3rem 0.85rem;">Trucks</span>
+          <span style="background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.7);font-size:0.78rem;font-weight:600;border-radius:9999px;padding:0.3rem 0.85rem;">RVs</span>
+          <span style="background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.7);font-size:0.78rem;font-weight:600;border-radius:9999px;padding:0.3rem 0.85rem;">Boats</span>
+          <span style="background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.7);font-size:0.78rem;font-weight:600;border-radius:9999px;padding:0.3rem 0.85rem;">Bikes</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Pricing Info -->
+    <div class="glass-card p-8 mb-16 fade-up">
+      <div class="section-heading" style="margin-bottom:1.75rem;">
+        <div class="bar"></div>
+        <div>
+          <span class="overline" style="margin-bottom:0.15rem;">Before You Book</span>
+          <h2 style="font-weight:900;font-size:1.25rem;letter-spacing:-0.01em;margin:0;">Pricing Information</h2>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div style="text-align:center;padding:1.5rem;background:rgba(0,0,0,0.25);border-radius:12px;border:1px solid rgba(255,255,255,0.05);">
+          <div style="font-size:2rem;margin-bottom:0.6rem;">🚗</div>
+          <div style="font-weight:700;font-size:0.9rem;margin-bottom:0.4rem;">Cars</div>
+          <div style="color:#e63030;font-weight:900;font-size:1.2rem;margin-bottom:0.3rem;">Listed Price</div>
+          <div style="color:rgba(255,255,255,0.35);font-size:0.78rem;">Standard pricing applies</div>
+        </div>
+        <div style="text-align:center;padding:1.5rem;background:rgba(0,0,0,0.25);border-radius:12px;border:1px solid rgba(255,255,255,0.05);">
+          <div style="font-size:2rem;margin-bottom:0.6rem;">🛻</div>
+          <div style="font-weight:700;font-size:0.9rem;margin-bottom:0.4rem;">Small SUVs &amp; Trucks</div>
+          <div style="color:#e63030;font-weight:900;font-size:1.2rem;margin-bottom:0.3rem;">+$10</div>
+          <div style="color:rgba(255,255,255,0.35);font-size:0.78rem;">Added to listed price</div>
+        </div>
+        <div style="text-align:center;padding:1.5rem;background:rgba(0,0,0,0.25);border-radius:12px;border:1px solid rgba(255,255,255,0.05);">
+          <div style="font-size:2rem;margin-bottom:0.6rem;">🚐</div>
+          <div style="font-weight:700;font-size:0.9rem;margin-bottom:0.4rem;">Large SUVs, Trucks &amp; Minivans</div>
+          <div style="color:#e63030;font-weight:900;font-size:1.2rem;margin-bottom:0.3rem;">Call for Quote</div>
+          <div style="color:rgba(255,255,255,0.35);font-size:0.78rem;">858-568-2763</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Services link -->
+    <div style="text-align:center;" class="fade-up">
+      <p style="color:rgba(255,255,255,0.4);font-size:0.875rem;margin-bottom:1.25rem;">Browse our full service menu</p>
+      <a href="services.html" class="cta-outline">
+        View All Services &amp; Pricing →
+      </a>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer style="background:#080808;border-top:1px solid rgba(255,255,255,0.05);padding:5rem 1.5rem 3rem;">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-10 mb-12">
+        <div>
+          <div class="flex items-center gap-1 mb-3">
+            <span style="color:#e63030;font-weight:900;font-size:1.1rem;letter-spacing:0.12em;text-transform:uppercase;">Detail</span>
+            <span style="color:#fff;font-weight:900;font-size:1.1rem;letter-spacing:0.12em;text-transform:uppercase;">Menu</span>
+          </div>
+          <p style="color:rgba(255,255,255,0.35);font-size:0.85rem;line-height:1.7;">Professional auto detailing services in San Diego.</p>
+        </div>
+        <div>
+          <h4 style="font-size:0.7rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:0.75rem;">Vehicle Types</h4>
+          <p style="color:rgba(255,255,255,0.45);font-size:0.875rem;">Cars · Trucks · RVs · Boats · Bikes</p>
+        </div>
+        <div>
+          <h4 style="font-size:0.7rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:0.75rem;">Pricing Note</h4>
+          <p style="color:rgba(255,255,255,0.45);font-size:0.875rem;line-height:1.75;">Prices listed for cars only.<br />Small SUVs &amp; Trucks add $10.<br />Large SUVs, Trucks &amp; Minivans — call for quote.</p>
+        </div>
+      </div>
+      <div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:2rem;display:flex;flex-direction:column;gap:1rem;align-items:center;justify-content:space-between;" class="sm:flex-row">
+        <a href="tel:8585682763" style="color:#e63030;font-weight:900;font-size:1.5rem;letter-spacing:0.1em;">858-568-2763</a>
+        <nav style="display:flex;gap:2rem;">
+          <a href="index.html" style="color:rgba(255,255,255,0.35);font-size:0.8rem;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">Home</a>
+          <a href="services.html" style="color:rgba(255,255,255,0.35);font-size:0.8rem;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">Services</a>
+          <a href="contact.html" style="color:rgba(255,255,255,0.35);font-size:0.8rem;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">Contact</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
